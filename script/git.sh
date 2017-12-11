@@ -52,6 +52,10 @@ function notkid-git-branch-remove {
   notkid-run "git push origin :${BRANCH_NAME}"
 }
 
+function notkid-delete-local-branch {
+  notkid-run "git branch |grep -iv develop |xargs git branch -D"
+}
+
 function notkid-pull-request {
   BRANCH=$1
   COMMIT=$2
