@@ -20,19 +20,24 @@ function notkid-git-branch-create {
   BASE_BRANCH=$2
 
   if [ -z "${NEW_BRANCH}" ]; then
-    echo 'Must input a new branch name'
-    return
+    NEW_BRANCH=$(date +'%Y%m%d%H%M%S')
   fi
 
   if [ -z "${BASE_BRANCH}" ]; then
-    BASE_BRANCH="master"
+    BASE_BRANCH="develop"
   fi
 
+  notkid-run "git fetch upstream"
+  notkid-run "git checkout develop"
+  notkid-run "git stash"
+  notkid-run "git rebase upstream/develop"
+  notkid-run "git push"
   notkid-run "git checkout ${BASE_BRANCH}"
   notkid-run "git fetch"
   notkid-run "git merge origin/${BASE_BRANCH}"
   notkid-run "git push origin HEAD:${NEW_BRANCH}"
   notkid-run "git checkout ${NEW_BRANCH}"
+  notkid-run "git stash pop"
 }
 
 function notkid-git-branch-remove {
