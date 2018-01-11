@@ -77,3 +77,19 @@ function notkid-pull-request {
   notkid-run "git fetch upstream"
 
 }
+
+function notkid-add-remote {
+  BRANCH=$1
+  ADDRESS=$2
+  if [ -z "${BRANCH}"]; then
+    echo 'please input branch name'
+    return
+  fi
+
+  if [ -z "${ADDRESS}"]; then
+    echo 'please input Branch address'
+    return
+  fi
+
+  notkid-run "git remote add ${BRANCH} ${ADDRESS}"
+}
